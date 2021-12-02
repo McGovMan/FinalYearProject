@@ -9,6 +9,7 @@ Help()
    echo "This script helps you build this software"
    echo
    echo "Syntax: build.sh [-c|s|b|h|v|S|B|V]"
+   echo "   E.g. build.sh -csb -S ./ -B build"
    echo "options:"
    echo "c     Build client code."
    echo "s     Build server code."
@@ -74,11 +75,12 @@ while getopts "csbhvVS:B:" opt; do
       h=$(ReturnTrueIfNotNull "$OPTARG");;
     S)
       if [ -d "$OPTARG" ]; then
-        S=$OPTARG
+        S="$OPTARG"
+        B="$OPTARG/build"
       fi;;
     B)
       if  [ -d "$OPTARG" ]; then
-        B=$OPTARG
+        B="$OPTARG"
       fi;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -128,9 +130,9 @@ endif()
 
 set(dir ${S})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY \${dir}/bin)
-set(CMAKE_BINARY_DIR \${dir}/build)
-set(CMAKE_BUILD_FILES_DIRECTORY \${dir}/build)
-set(CMAKE_BUILD_DIRECTORY \${dir}/build)
+set(CMAKE_BINARY_DIR ${B})
+set(CMAKE_BUILD_FILES_DIRECTORY ${B})
+set(CMAKE_BUILD_DIRECTORY ${B})
 
 EOF
 
@@ -149,12 +151,12 @@ fi
 
 # Delete build folder contents if exists
 if [ -d "$B" ] && [ "$B" != "/" ] && [ -n "$(ls -A "$B" 2>/dev/null)" ]; then
-  rm -R "$B"/*
+  rm -R "${B:?}"/*
 fi
 
 # Delete bin folder contents if exists
 if [ -d "$S/bin" ] && [ -n "$(ls -A "$S/bin" 2>/dev/null)" ]; then
-  rm -R "$S/bin"/*
+  rm -R "${S:?}/bin"/*
 fi
 
 cmake -S "$S" -B "$B"

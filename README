@@ -2,3 +2,29 @@ Final Year Project
 ==================
 
 Visit the docs directory for more information.
+
+## Using the project
+
+### Prerequisites
+apt-get install doxygen cmake build-essentials
+
+### Build it!
+> ./build.sh -h
+This script helps you build this software
+
+Syntax: build.sh [-c|s|b|h|v|S|B|V]
+options:
+c     Build client code.
+s     Build server code.
+b     Build balancer code.
+S     Source directory.
+B     Build directory.
+h     Print this Help.
+v     Verbose mode.
+V     Print software information.
+
+To build all executables
+> ./build.sh -csb
+
+Execute the builds
+> ./bin/client.out

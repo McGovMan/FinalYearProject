@@ -14,9 +14,9 @@ endif()
 
 set(dir /home/conor/Workspace/College/fyp)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dir}/bin)
-set(CMAKE_BINARY_DIR ${dir}/build)
-set(CMAKE_BUILD_FILES_DIRECTORY ${dir}/build)
-set(CMAKE_BUILD_DIRECTORY ${dir}/build)
+set(CMAKE_BINARY_DIR /home/conor/Workspace/College/fyp/build)
+set(CMAKE_BUILD_FILES_DIRECTORY /home/conor/Workspace/College/fyp/build)
+set(CMAKE_BUILD_DIRECTORY /home/conor/Workspace/College/fyp/build)
 
 add_subdirectory (src/server)
 add_subdirectory (src/client)
