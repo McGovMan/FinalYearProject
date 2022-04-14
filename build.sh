@@ -31,7 +31,7 @@ Info()
     echo "  NAME FinalYearProject"
     echo "  VERSION 0.1"
     echo "  DESCRIPTION Implementation of MPTCP & QUIC in a load balancer"
-    echo "  LANGUAGES CXX"
+    echo "  LANGUAGES C"
 }
 
 #####################
@@ -121,7 +121,7 @@ cmake_minimum_required(VERSION 3.11...3.22)
 project(FinalYearProject
         VERSION 0.1
         DESCRIPTION "Implementation of MPTCP & QUIC in a load balancer"
-        LANGUAGES CXX)
+        LANGUAGES C)
 
 # guard against in-source builds
 if(\${CMAKE_SOURCE_DIR} STREQUAL \${CMAKE_BINARY_DIR})

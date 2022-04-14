@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.11...3.22)
 project(FinalYearProject
         VERSION 0.1
         DESCRIPTION "Implementation of MPTCP & QUIC in a load balancer"
-        LANGUAGES CXX)
+        LANGUAGES C)
 
 # guard against in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -18,6 +18,4 @@ set(CMAKE_BINARY_DIR /home/conor/Workspace/College/fyp/build)
 set(CMAKE_BUILD_FILES_DIRECTORY /home/conor/Workspace/College/fyp/build)
 set(CMAKE_BUILD_DIRECTORY /home/conor/Workspace/College/fyp/build)
 
-add_subdirectory (src/server)
-add_subdirectory (src/client)
 add_subdirectory (src/balancer)
