@@ -1,9 +1,0 @@
-# 11th Nov
-Got a bare bones project up on GitHub.
-
-# 1st December
-Implemented a build script that will make it easier to build the components on the fly and eventually test them
-automatically. This work was lost due to a rogue rm -R ./*.
-
-# 2nd December
-Reimplemented all the work done on the 1st. Looking at adding a document generator to the project.

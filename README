@@ -1,30 +1,9 @@
 Final Year Project
 ==================
 
-Visit the docs directory for more information.
+This project implements 3 services which are in the 'src' directory.
+ - Load Balancer CLI
+ - Load Balancer Packet Statistics Aggregator
+ - Netfilter Module For Handling Load Balancer Packets On The Endpoint Servers
 
-## Using the project
-
-### Prerequisites
-apt-get install doxygen cmake build-essentials
-
-### Build it!
-> ./build.sh -h
-This script helps you build this software
-
-Syntax: build.sh [-c|s|b|h|v|S|B|V]
-options:
-c     Build client code.
-s     Build server code.
-b     Build balancer code.
-S     Source directory.
-B     Build directory.
-h     Print this Help.
-v     Verbose mode.
-V     Print software information.
-
-To build all executables
-> ./build.sh -csb
-
-Execute the builds
-> ./bin/client.out
+Each service has its own README which describes how to use it.

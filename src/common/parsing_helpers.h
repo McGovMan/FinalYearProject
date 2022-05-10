@@ -12,7 +12,7 @@
 #include <linux/icmpv6.h>
 #include <linux/udp.h>
 #include <linux/tcp.h>
-#include "../balancer-xdp/rewriting_helpers.h"
+#include "rewriting_helpers.h"
 #include <bpf/bpf_helpers.h>
 #include <bpf/bpf_endian.h>
 
@@ -27,10 +27,7 @@ struct packet_context {
     uint32_t *backends_key;
     __u16 orig_eth_type;
     uint16_t orig_ip_type;
-    struct iphdr *orig_ip4_hdr;
-    struct ipv6hdr *orig_ip6_hdr;
     struct ethhdr *eth_hdr;
-    __u32 dest_ip4;
     struct iphdr *ip4_hdr;
     struct lb_gue_hdr *gue_hdr;
     struct udphdr *udp_hdr;
@@ -41,12 +38,19 @@ struct packet_context {
     if ((uint8_t *)((hdr) + 1) > (packet_context)->packet_end) return -1; \
     } while (0)
 
+#define get_header_or_return_drop_fixed_offset(hdr, packet_context, offset, hdr_type) do { \
+    hdr = (hdr_type *)(offset); \
+    if ((uint8_t *)((hdr) + 1) > (packet_context)->packet_end) return -1; \
+    } while (0)
+
 /* Packet contents presented nicely */
 static __always_inline int parse_packet(struct packet_context *c) {
     /* Parse ethernet header */
-    const struct ethhdr *eth_hdr;
+    struct ethhdr *eth_hdr;
     get_header_or_return_drop(eth_hdr, c, 0, struct ethhdr);
     c->orig_eth_type = bpf_ntohs(eth_hdr->h_proto);
+    //__builtin_memcpy(c->orig_eth_src, eth_hdr->h_source, 6);
+    //__builtin_memcpy(c->orig_eth_dest, eth_hdr->h_dest, 6);
 
     /* Parse IP header */
     /* Accept IPv4, IPv6, ARP, drop everything else */
@@ -59,14 +63,16 @@ static __always_inline int parse_packet(struct packet_context *c) {
         case ETH_P_IP:
             get_header_or_return_drop(ip4_hdr, c, sizeof(struct ethhdr), struct iphdr);
             c->orig_ip_type = ip4_hdr->protocol;
-            c->orig_ip4_hdr = ip4_hdr;
+            //c->orig_ip4_src = ip4_hdr->saddr;
+            //c->orig_ip4_dest = ip4_hdr->daddr;
             /* do not support fragmented packets as L4 headers may be missing */
             // TODO
             break;
         case ETH_P_IPV6:
             get_header_or_return_drop(ip6_hdr, c, sizeof(struct ethhdr), struct ipv6hdr);
             c->orig_ip_type = ip6_hdr->nexthdr;
-            c->orig_ip6_hdr = ip6_hdr;
+            //c->orig_ip6_src = ip6_hdr->saddr;
+            //c->orig_ip6_dest = ip6_hdr->daddr;
             break;
         default:
             return -1;

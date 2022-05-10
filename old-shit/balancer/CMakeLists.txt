@@ -1,7 +1,0 @@
-#add_executable(balancer.out balancer.c balancer.h)
-#add_executable(gre.out gre.c gre.h)
-#add_executable(sniff.out sniff.c sniff.h)
-#add_executable(pcap.out pcap.c)
-#target_link_libraries(pcap.out /usr/lib64/libpcap.so.1)
-add_executable(stub_server.out stub_server.c)
-add_executable(oldbalancer.out oldbalancer.c)

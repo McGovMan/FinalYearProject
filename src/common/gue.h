@@ -50,17 +50,17 @@
 
 struct lb_gue_hdr {
     // Include GUE Header from include/net/gue.h
-    __u8	version:2,
+    __u8	hlen:5,
             control:1,
-            hlen:5;
+            version:2;
+    //__u8    version_control_hlen;
     __u8	proto_ctype;
     __be16	flags;
 
     // Our Private Fields
-    __u16   reversed; // Kept for future use and extensibility
+    __u16   reserved; // Kept for future use and extensibility
     __u8    next_hop;
     __u8    hop_count;
-    __u32   hops[2];
 } __attribute__((__packed__));
 
 #endif /* _GUE_H_ */
